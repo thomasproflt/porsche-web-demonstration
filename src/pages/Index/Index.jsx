@@ -95,22 +95,7 @@ const Index = () => {
 
     const [active, setActive] = useState(null);
 
-    //pizza
-    const [quantities, setQuantities] = useState({});
-
-    const increase = (id) => {
-        setQuantities((prev) => ({
-            ...prev,
-            [id]: (prev[id] || 0) + 1
-        }));
-    };
-
-    const decrease = (id) => {
-        setQuantities((prev) => ({
-            ...prev,
-            [id]: Math.max(0, (prev[id] || 0) - 1)
-        }));
-    };
+    const playPromiseRef = useRef(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -118,11 +103,9 @@ const Index = () => {
                 if (!videoRef.current) return;
 
                 if (entry.isIntersecting) {
-                    if (!hasAutoPlayed) {
+                    if (!pausedByUser) {
                         safePlay();
                         setHasAutoPlayed(true);
-                    } else if (!pausedByUser) {
-                        safePlay();
                     }
                 } else {
                     safePause();
@@ -167,23 +150,38 @@ const Index = () => {
         setIsMuted(!isMuted);
     };
 
+
     const safePlay = async () => {
         const video = videoRef.current;
         if (!video) return;
 
-        if (!video.paused) return; // evita play duplicado
+        // evita múltiplos play simultâneos
+        if (playPromiseRef.current) return;
 
         try {
-            await video.play();
-            setIsPlaying(true);
+            const promise = video.play();
+
+            if (promise !== undefined) {
+                playPromiseRef.current = promise;
+
+                await promise;
+                setIsPlaying(true);
+            }
         } catch (err) {
-            console.warn("Play interrompido:", err);
+            if (err.name !== "AbortError") {
+                console.warn("Erro ao dar play:", err);
+            }
+        } finally {
+            playPromiseRef.current = null;
         }
     };
 
     const safePause = () => {
         const video = videoRef.current;
         if (!video) return;
+
+        // evita pausar enquanto play ainda está acontecendo
+        if (playPromiseRef.current) return;
 
         if (!video.paused) {
             video.pause();
@@ -209,6 +207,7 @@ const Index = () => {
                         muted
                         loop
                         playsInline
+                        preload="metadata"
                     />
 
                     {/* THUMB */}
