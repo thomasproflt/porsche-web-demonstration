@@ -1,9 +1,7 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { catalogPorsches } from "../../data/catalogPorsches.data";
 import NavbarWhite from "../../components/NavbarWhite/NavbarWhite";
-import PlaceOrder from "../../components/PlaceOrder/PlaceOrder";
 import Footer from "../../components/Footer/Footer";
 
 const ArrowLeft = (
@@ -419,96 +417,6 @@ const PorscheN = () => {
                         </div>
 
                     </div>
-
-                    {/**<motion.div
-                        variants={catalogContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="flex flex-col gap-4 w-full px-15 mb-10"
-                    >
-                        {Array.from({ length: Math.ceil(catalogPorsches.length / 2) }).map((_, rowIndex) => {
-                            const items = catalogPorsches.slice(rowIndex * 2, rowIndex * 2 + 2);
-
-                            return (
-                                <div
-                                    key={rowIndex}
-                                    className="flex flex-col md:flex-row gap-4 mb-4 w-full"
-                                >
-                                    {items.map((item, colIndex) => {
-                                        const index = rowIndex * 2 + colIndex;
-                                        const isActive = active === index;
-                                        const isLeft = colIndex === 0;
-
-                                        return (
-                                            <motion.div
-                                                key={item.id}
-                                                variants={catalogItem}
-                                                onMouseEnter={() => setActive(index)}
-                                                onMouseLeave={() => setActive(null)}
-                                                style={{
-                                                    transformOrigin: isLeft ? "right center" : "left center"
-                                                }}
-                                                animate={{
-                                                    scale: isActive ? 1.08 : 1,
-                                                }}
-                                                transition={{
-                                                    duration: 0.5,
-                                                    ease: [0.22, 1, 0.36, 1]
-                                                }}
-                                                className={`
-                                relative h-[300px] md:h-[500px] rounded-md overflow-hidden cursor-pointer
-                                will-change-transform
-                                ${isActive ? "md:flex-[2]" : "md:flex-[2]"}
-                            `}
-                                            >
-                                                {isActive && (
-                                                    <video
-                                                        src={item.video}
-                                                        muted
-                                                        loop
-                                                        playsInline
-                                                        autoPlay
-                                                        className="absolute inset-0 w-full h-full object-cover"
-                                                    />
-                                                )}
-
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.title}
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                    className={`
-                        absolute inset-0 w-full h-full object-cover
-                        transition-all duration-500
-                        ${isActive ? "opacity-0 scale-110" : "opacity-100"}
-                    `}
-                                                />
-
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-
-                                                <div className="absolute bottom-0 z-10 p-6">
-                                                    <h1 className={`
-                                    text-white text-xl font-semibold transition-all duration-500
-                                    ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-                                `}>
-                                                        {item.title}
-                                                    </h1>
-
-                                                    <p className={`
-                                    text-zinc-300 transition-all duration-500 delay-100
-                                    ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-                                `}>
-                                                        {item.description}
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        );
-                                    })}
-                                </div>
-                            );
-                        })}
-                    </motion.div> */}
 
                     <div className="flex flex-col items-center text-center px-10 md:px-[9.10rem] mb-20">
                         <motion.a
