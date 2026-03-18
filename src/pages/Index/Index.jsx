@@ -388,16 +388,20 @@ const Index = () => {
                             `}
                                             >
                                                 {/* VIDEO */}
-                                                {isActive && (
-                                                    <video
-                                                        src={item.video}
-                                                        muted
-                                                        loop
-                                                        playsInline
-                                                        autoPlay
-                                                        className="absolute inset-0 w-full h-full object-cover"
-                                                    />
-                                                )}
+                                                <video
+                                                    src={item.video}
+                                                    muted
+                                                    loop
+                                                    playsInline
+                                                    preload="metadata"
+                                                    ref={(el) => {
+                                                        if (el && isActive) {
+                                                            el.play().catch(() => { });
+                                                        }
+                                                    }}
+                                                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-0"
+                                                        }`}
+                                                />
 
                                                 {/* THUMB */}
                                                 <img
