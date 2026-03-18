@@ -118,24 +118,14 @@ const Index = () => {
                 if (!videoRef.current) return;
 
                 if (entry.isIntersecting) {
-                    // ✅ PRIMEIRA VEZ → autoplay
                     if (!hasAutoPlayed) {
-                        videoRef.current.play();
                         safePlay();
                         setHasAutoPlayed(true);
-                    }
-
-                    // ✅ SE NÃO FOI PAUSADO PELO USUÁRIO → pode voltar sozinho
-                    else if (!pausedByUser) {
-                        videoRef.current.play();
+                    } else if (!pausedByUser) {
                         safePlay();
                     }
-
-                    // ❌ SE FOI O USUÁRIO → NÃO FAZ NADA
                 } else {
-                    // 👇 só pausa automático (não marca como user)
-                    videoRef.current.pause();
-                    setIsPlaying(false);
+                    safePause();
                 }
             },
             { threshold: 0.6 }
@@ -162,13 +152,11 @@ const Index = () => {
         setUserInteracted(true);
 
         if (isPlaying) {
-            videoRef.current.pause();
-            setIsPlaying(false);
-            setPausedByUser(true); // 👈 usuário pausou manualmente
+            safePause();
+            setPausedByUser(true);
         } else {
-            videoRef.current.play();
             safePlay();
-            setPausedByUser(false); // 👈 voltou a tocar manualmente
+            setPausedByUser(false);
         }
     };
 
@@ -180,12 +168,26 @@ const Index = () => {
     };
 
     const safePlay = async () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (!video.paused) return; // evita play duplicado
+
         try {
-            await videoRef.current.play();
+            await video.play();
             setIsPlaying(true);
         } catch (err) {
-            // evita o erro no console (AbortError)
             console.warn("Play interrompido:", err);
+        }
+    };
+
+    const safePause = () => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (!video.paused) {
+            video.pause();
+            setIsPlaying(false);
         }
     };
     return (
