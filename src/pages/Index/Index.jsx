@@ -5,12 +5,6 @@ import { motion } from "framer-motion";
 import { catalogPorsches } from "../../data/catalogPorsches.data";
 import Footer from "../../components/Footer/Footer";
 
-const ArrowRight = (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-        <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
-    </svg>
-);
-
 const textLeft = {
     hidden: {
         opacity: 0,
@@ -274,24 +268,6 @@ const Index = () => {
                             O carro que você merece
                         </motion.h1>
 
-                        {/**
-                         * <motion.p
-                            variants={textRight}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            className="text-left max-w-lg mb-5 text-zinc-200"
-                        >
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat atque tempora vel amet nam error perferendis natus totam necessitatibus.
-                        </motion.p>
-
-                        <motion.div variants={catalogItem}>
-                                <button className="bg-red-500 hover:bg-red-500/85 px-6 py-2 rounded-full cursor-pointer transition-all duration-200">
-                                    Ver Cardápio
-                                </button>
-                            </motion.div>
-                         */}
-
                         <motion.div
                             variants={catalogContainer}
                             initial="hidden"
@@ -300,9 +276,9 @@ const Index = () => {
                             className="flex flex-row items-center gap-2 mb-20"
                         >
                             <motion.div variants={catalogItem}>
-                                <button className="bg-transparent hover:bg-white/5 border border-zinc-100/10 px-6 py-2 rounded-lg cursor-pointer transition-all duration-200 text-white">
+                                <a href="/models/carrera-911/" className="bg-transparent hover:bg-white/5 border border-zinc-100/10 px-6 py-2 rounded-lg cursor-pointer transition-all duration-200 text-white">
                                     Descubra mais
-                                </button>
+                                </a>
                             </motion.div>
                         </motion.div>
 
