@@ -121,14 +121,14 @@ const Index = () => {
                     // ✅ PRIMEIRA VEZ → autoplay
                     if (!hasAutoPlayed) {
                         videoRef.current.play();
-                        setIsPlaying(true);
+                        safePlay();
                         setHasAutoPlayed(true);
                     }
 
                     // ✅ SE NÃO FOI PAUSADO PELO USUÁRIO → pode voltar sozinho
                     else if (!pausedByUser) {
                         videoRef.current.play();
-                        setIsPlaying(true);
+                        safePlay();
                     }
 
                     // ❌ SE FOI O USUÁRIO → NÃO FAZ NADA
@@ -167,7 +167,7 @@ const Index = () => {
             setPausedByUser(true); // 👈 usuário pausou manualmente
         } else {
             videoRef.current.play();
-            setIsPlaying(true);
+            safePlay();
             setPausedByUser(false); // 👈 voltou a tocar manualmente
         }
     };
@@ -177,6 +177,16 @@ const Index = () => {
 
         videoRef.current.muted = !isMuted;
         setIsMuted(!isMuted);
+    };
+
+    const safePlay = async () => {
+        try {
+            await videoRef.current.play();
+            setIsPlaying(true);
+        } catch (err) {
+            // evita o erro no console (AbortError)
+            console.warn("Play interrompido:", err);
+        }
     };
     return (
         <>
