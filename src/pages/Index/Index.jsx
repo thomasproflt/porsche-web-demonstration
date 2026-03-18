@@ -203,7 +203,7 @@ const Index = () => {
                     <video
                         ref={videoRef}
                         className="absolute inset-0 w-full h-full object-cover"
-                        src="/images/hero/The-new-911.mp4"
+                        src="/images/catalog/the-new-911.mp4"
                         muted
                         loop
                         playsInline
